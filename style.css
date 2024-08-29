@@ -242,7 +242,7 @@
 
 /* service section */
 .service-section {
-
+    margin-top: 120px;
 }
 
 .service-content {
@@ -276,10 +276,27 @@
 }
 
 .portfolio-content {
-
+    display: flex;
+    justify-self: center;
+    flex-wrap: wrap;
 }
 
-.card1 {
+.portfolio-content img {
+    width: 310px;
+    height: 224px;
+}
+
+.portfolio-content div {
+    border: 3px solid #A6A6A6;
+    height: 420px;
+    width: 310px;
+}
+
+/* testimonials sections */
+.portfolio-section {
     
 }
 
+.portfolio-content {
+
+}
