@@ -17,6 +17,9 @@ let goalY = board.height - 200;
 let enemyGoalX = 830;
 let enemyGoalY = board.height - 200;
 let playerHit = false;
+let ballW = 50;
+let ballH = 50;
+let froze = false;
 
 //powerup
 let increase = [];
@@ -26,6 +29,7 @@ let freeze = [];
 window.onload = function(){
     game();
     setInterval(spawnRandom, 5000);
+    setInterval()
 }
 
 function drawGame(){
@@ -67,12 +71,14 @@ function drawEnemy(){
 
 function drawBall(){
     ctx.fillStyle = "black";
-    ctx.fillRect(ballX, ballY, 50, 50);
+    ctx.fillRect(ballX, ballY, ballW, ballH);
 }
 
 function updateBall(){
-    ballX += velocityBallX;
-    ballY += velocityBallY;
+    if(!froze){
+        ballX += velocityBallX;
+        ballY += velocityBallY;    
+    }
 
     drawBall();
 }
@@ -128,6 +134,11 @@ function drawFreeze(){
         e.y += 5;
         ctx.fillRect(e.x, e.y, e.w, e.h);
     }
+}
+
+function runFreeze(){
+    velocityBallX = -3;
+    velocityBallY = 0;
 }
 
 function game() {
@@ -207,11 +218,31 @@ function isCollisions(){
     }
 
     // increase
-    if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, {x: ballX, y: ballY, w: 50, h: 50}) && playerHit){
-        velocityBallX = 3;
-        velocityBallY = -10;
-        setTimeout(() => {
-            velocityBallY = gravity;
-        }, 500);
+    for(let i = 0; i < increase.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, increase[i])){
+            ballW += 10;
+            ballH += 10;
+            increase.splice(i, 1);
+        }
+    }
+
+    // decrease
+    for(let i = 0; i < decrease.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, decrease[i])){
+            ballW -= 10;
+            ballH -= 10;
+            decrease.splice(i, 1);
+        }
+    }
+
+    // freeze
+    for(let i = 0; i < freeze.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, freeze[i])){
+            froze = true;
+            freeze.splice(i, 1);
+            setTimeout(() => {
+                froze = false;
+            }, 3500);
+        }
     }
 }
