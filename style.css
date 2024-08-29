@@ -200,6 +200,86 @@
 }
 
 /* gallery section */
+.gallery-section {
+
+}
+
+.gallery-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.gallery-content img {
+    border-radius: 6px;
+    margin-bottom: 40px;
+}
+
+.img1 {
+    width: 239px;
+    height: 239px;
+}
+
+.img2 {
+    width: 420px;
+    height: 239px;
+}
+
+.img3 {
+    width: 340px;
+    height: 239px;
+}
+
+.img4 {
+    width: 580px;
+    height: 239px;
+}
+
+.img5 {
+    width: 520px;
+    height: 239px;
+}
+
+/* service section */
+.service-section {
+
+}
+
+.service-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.service-content img {
+    background-color: #57D3DA;
+    padding: 20px;
+    border-radius: 50px;  
+}
+
+.service-content div {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service-content p {
+    text-align: center;
+    margin-top: 20px;
+}
 
 
+/* portfolio section */
+.portfolio-section {
+
+}
+
+.portfolio-content {
+
+}
+
+.card1 {
+    
+}
 
