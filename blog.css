@@ -1,0 +1,75 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    line-height: 26px;
+}
+
+:root {
+    --button-color: #467BFF;
+}
+
+/* header */
+.header-secion {
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 26px;
+}
+
+.list {
+    display: flex;
+}
+
+.list p {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.dashboard {
+    background-color: var(--button-color);
+    padding: 20px 20px;
+    color: white;
+    border-radius: 6px;
+}
+
+/* body */
+.body {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    width: 1200px;
+}
+
+/* categories */
+.categories {
+    display: flex;
+    margin-top: 50px;
+    color: #7B7B7B;
+}
+
+.categories h1 {
+    font-size: 40px;
+}
+
+.categories select {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: 2px solid #7B7B7B;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.categories button {
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    background-color: white;
+    border: 2px solid #7B7B7B;
+}
