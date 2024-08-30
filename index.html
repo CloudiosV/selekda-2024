@@ -11,17 +11,17 @@
     <div id="container">
         <div id="app-container">
 
-        <canvas id="board" onmousedown="cvsMouseDown()" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
+        <canvas id="board" onmousedown="cvsMouseDown(event)" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
 
             <div id="topbar">
                 <div id="topbar-content">
 
                     <p style="margin-left: 40px; margin-right: 10px;">shape:</p>
 
-                    <div class="shape">
+                    <div class="shape" onclick="shapeType('circle')">
                         <p>circle</p>
                     </div>
-                    <div class="shape" style="margin-right: 50px;">
+                    <div class="shape" style="margin-right: 50px;" onclick="shapeType('rectangle')">
                         <p style="font-size: 9px;">rectangle</p>
                     </div>
 
@@ -82,27 +82,24 @@
                 </div>
 
                 <div id="file-work">
-                    <div class="selected" onclick="brush()">
+                    <div class="selected">
                         <p>paste</p>
                     </div>
-
+                    
                     <div class="selected">
-                        <p>redo</p>
-                        <p>0</p>
-                    </div>
-
-                    <div class="selected" onclick="eraser();">
-                        <p>undo</p>
-                        <p>5</p>
-                    </div>
-
-                    <div class="selected" onclick="text()">
-                        <p>-<br>zoom</p>
+                        <p style="text-align: center;">undo<br>5</p>
                     </div>
 
                     <div class="selected">
-                        <p>+</p>
-                        <p>zoom</p>
+                        <p style="text-align: center;">redo<br>0</p>
+                    </div>
+
+                    <div class="selected" onclick="zoomOut()">
+                        <p style="text-align: center;">-<br>zoom</p>
+                    </div>
+
+                    <div class="selected" onclick="zoomIn()">
+                        <p style="text-align: center;">+<br>zoom</p>
                     </div>
 
                     <div class="selected">

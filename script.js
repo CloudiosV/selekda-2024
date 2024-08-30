@@ -13,6 +13,10 @@ let blue = document.getElementById("blue");
 let r = 0;
 let g = 0;
 let b = 0;
+let startX = 0;
+let startY = 0;
+let objectWidth = 0;
+let objectHeight = 0;
 let color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
 let rgb = document.getElementById("rgb");
 
@@ -26,23 +30,28 @@ function drawCanvas(){
     ctx.fillRect(0, 0, board.width, board.height);
 }
 
-function cvsMouseDown(){
+function cvsMouseDown(e){
     mouseDown = true;
-    console.log("down")
+    startX = e.offsetX;
+    startY = e.offsetY;
 }
 
 function cvsMouseMove(e){
     if(mouseDown){
         ctx.beginPath();
         
-        if (currentTool === "brush") {
+        if(currentTool == "brush") {
             ctx.fillStyle = color;
             ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
             ctx.fill();
-        } else if (currentTool === "eraser") {
+        }else if(currentTool == "eraser") {
             ctx.fillStyle = `rgba(255, 255, 255)`;
             ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
             ctx.fill();
+        }else if(currentTool == "circle"){
+            
+        }else if(currentTool == "rectangle"){
+
         }
 
         ctx.closePath();
@@ -94,8 +103,20 @@ function adjust(type){
     }else if(type == "greyscale"){
         
     }else if(type == "opacity"){
-        
+
     }
+}
+
+function shapeType(type){
+    currentTool = type;
+}
+
+function zoomIn(){
+    ctx.scale(2,2);
+}
+
+function zoomOut(){
+
 }
 
 function startDrawing(){
