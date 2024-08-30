@@ -86,6 +86,18 @@ function displayColor(){
     rgb.style.backgroundColor = `rgba(${r}, ${g}, ${b})`
 }
 
+function adjust(type){
+    if(type == "brightness"){
+
+    }else if(type == "saturation"){
+        
+    }else if(type == "greyscale"){
+        
+    }else if(type == "opacity"){
+        
+    }
+}
+
 function startDrawing(){
     rangeValue();
     changingColor();

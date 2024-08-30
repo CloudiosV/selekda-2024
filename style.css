@@ -8,7 +8,7 @@
 #board {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 47%;
     transform: translate(-50%, -50%);
 }
 
@@ -138,17 +138,17 @@
     justify-content: space-between;
 }
 
-.adjust-container {
+#adjust-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
-    width: ;
+    margin-top: 30px;
 }
 
 .adjust {
     background-color: rgb(23, 84, 123);
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 20px;
     padding: 10px;
     border-radius: 6px;
     font-size: 12px;
@@ -164,3 +164,27 @@
     font-size: 9px;
 }
 
+#file-work {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.selected {
+    background-color: rgb(23, 84, 123);
+    width: 30px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.selected p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 9px;
+}

@@ -26,7 +26,7 @@
                     </div>
 
                     <label for="width">size:</label>
-                    <input type="range" value="5" min="0" max="100" id="width" style="margin-right: 16px;">
+                    <input type="range" value="5" min="0" max="100" id="width" style="margin-right: 16px; accent-color: white;">
                     <div style="background-color: rgb(23, 84, 123); padding: 6px 10px; font-size: 14px; border-radius: 4px; margin-right: 30px;">
                         <p id="width-size">5px</p>
                     </div>  
@@ -80,6 +80,39 @@
                         <p>shape</p>
                     </div>
                 </div>
+
+                <div id="file-work">
+                    <div class="selected" onclick="brush()">
+                        <p>paste</p>
+                    </div>
+
+                    <div class="selected">
+                        <p>redo</p>
+                        <p>0</p>
+                    </div>
+
+                    <div class="selected" onclick="eraser();">
+                        <p>undo</p>
+                        <p>5</p>
+                    </div>
+
+                    <div class="selected" onclick="text()">
+                        <p>-<br>zoom</p>
+                    </div>
+
+                    <div class="selected">
+                        <p>+</p>
+                        <p>zoom</p>
+                    </div>
+
+                    <div class="selected">
+                        <p>import</p>
+                    </div>
+
+                    <div class="selected">
+                        <p>export</p>
+                    </div>
+                </div>
             </div>
 
             <div id="right-sidebar">
@@ -88,35 +121,40 @@
                     <div id="rgb"></div>
                     <div class="color-range">
                         <p>red</p>
-                        <input type="range" value="0" min="0" max="255" id="red">
+                        <input type="range" value="0" min="0" max="255" id="red" style="accent-color: red;">
                     </div>
 
                     <div class="color-range">
                         <p>green</p>
-                        <input type="range" value="0" min="0" max="255" id="green">
+                        <input type="range" value="0" min="0" max="255" id="green" style="accent-color: green;">
                     </div>
 
                     <div class="color-range">
                         <p>blue</p>
-                        <input type="range" value="0" min="0" max="255" id="blue">
+                        <input type="range" value="0" min="0" max="255" id="blue" style="accent-color: blue;">
                     </div>
 
                     <div id="adjust-container">
-                        <div class="adjust">
+                        <div class="adjust" onclick="adjust('brightness')">
                             <p>brightness</p>
                         </div>
     
-                        <div class="adjust">
+                        <div class="adjust" onclick="adjust('saturation')">
                             <p>saturation</p>
                         </div>
     
-                        <div class="adjust">
+                        <div class="adjust" onclick="adjust('greyscale')">
                             <p>greyscale</p>
                         </div>
     
-                        <div class="adjust">
+                        <div class="adjust" onclick="adjust('opacity')">
                             <p>opacity</p>
                         </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center;">
+                        <p style="font-size: 10px;">Intensity</p>
+                        <input type="range" value="50" min="0" max="100" style="accent-color: white;">
                     </div>
                 </div>
             </div>
