@@ -13,13 +13,33 @@
 
             <div id="topbar">
                 <div id="topbar-content">
-                    <p>shape:</p>
+
+                    <p style="margin-left: 40px; margin-right: 10px;">shape:</p>
+
                     <div class="shape">
                         <p>circle</p>
                     </div>
-                    <div class="shape">
+                    <div class="shape" style="margin-right: 50px;">
                         <p style="font-size: 9px;">rectangle</p>
                     </div>
+
+                    <label for="width">size:</label>
+                    <input type="range" value="5" min="0" max="100" id="width" style="margin-right: 16px;">
+                    <div style="background-color: rgb(23, 84, 123); padding: 6px 10px; font-size: 14px; border-radius: 4px; margin-right: 30px;">
+                        <p id="width-size">5px</p>
+                    </div>  
+
+                    <p>opacity:</p>
+                    <div class="opacity" onclick="opacity(100);">
+                        <p>100</p>
+                    </div>
+                    <div class="opacity" onclick="opacity(50)">
+                        <p>50</p>
+                    </div>
+                    <div class="opacity" onclick="opacity(0)">
+                        <p>0</p>
+                    </div>
+
                 </div>
             </div>
 
@@ -34,7 +54,7 @@
                         <p>bucket</p>
                     </div>
 
-                    <div class="selection">
+                    <div class="selection" onclick="eraser();">
                         <p>eraser</p>
                     </div>
 

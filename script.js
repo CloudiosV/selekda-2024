@@ -3,6 +3,9 @@ let ctx = board.getContext("2d");
 board.width = 800;
 board.height = 400;
 let mouseDown = false;
+let widthSize = document.getElementById("width-size");
+let widthRange = document.getElementById("width");
+let opacityValue = 100;
 
 window.onload = function(){ 
     drawCanvas();
@@ -23,8 +26,8 @@ function cvsMouseMove(e){
     if(mouseDown){
         ctx.beginPath();
 
-        ctx.fillStyle = "black";
-        ctx.arc(e.offsetX, e.offsetY, 5, 0, 2 * Math.PI)
+        ctx.fillStyle = `rgba(0, 0, 0, ${opacityValue})`;
+        ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI)
         ctx.fill();
 
         ctx.closePath();
@@ -36,7 +39,15 @@ function cvsMouseUp(){
     console.log("up")
 }
 
+function rangeValue(){
+    widthSize.innerHTML = `${widthRange.value} px`
+}
+
+function opacity(e){
+    opacityValue = `${e}%`;
+}
+
 function startDrawing(){
-    cvsMouseOver();
+    rangeValue();
     requestAnimationFrame(startDrawing);
 }
