@@ -11,7 +11,7 @@
     <div id="container">
         <div id="app-container">
 
-        <canvas id="board" onmousedown="cvsMouseDown(event)" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
+        <canvas id="board" onmousedown="cvsMouseDown(event)" onmouseup="cvsMouseUp(event)" onmousemove="cvsMouseMove(event)"></canvas>       
 
             <div id="topbar">
                 <div id="topbar-content">
@@ -38,8 +38,16 @@
                     <div class="opacity" onclick="opacity(50)">
                         <p>50</p>
                     </div>
-                    <div class="opacity" onclick="opacity(0)">
+                    <div class="opacity" onclick="opacity(0)" style="margin-right: 30px;">
                         <p>0</p>
+                    </div>
+
+                    <p>brush type:</p>
+                    <div class="brush-type" onclick="brushType('circle')">
+                        <p>circle</p>
+                    </div>
+                    <div class="brush-type" onclick="brushType('rectangle')">
+                        <p>rectangle</p>
                     </div>
 
                 </div>
@@ -64,7 +72,7 @@
                         <p>text</p>
                     </div>
 
-                    <div class="selection">
+                    <div class="selection" onclick="move()">
                         <p>move</p>
                     </div>
 
@@ -76,8 +84,8 @@
                         <p>picker</p>
                     </div>
 
-                    <div class="selection">
-                        <p>shape</p>
+                    <div class="selection" onclick="shapeType('line')">
+                        <p>line</p>
                     </div>
                 </div>
 

@@ -78,6 +78,23 @@
     height: 100%;
 }
 
+.brush-type {
+    background-color: rgb(23, 84, 123);
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.brush-type p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
 
 #sidebar {
     background-color: rgb(0, 55, 89);

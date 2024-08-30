@@ -5,7 +5,7 @@ board.height = 400;
 let mouseDown = false;
 let widthSize = document.getElementById("width-size");
 let widthRange = document.getElementById("width");
-let opacityValue = 100;
+let opacityValue = 1;
 let currentTool = "brush";
 let red = document.getElementById("red");
 let green = document.getElementById("green");
@@ -19,6 +19,8 @@ let objectWidth = 0;
 let objectHeight = 0;
 let color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
 let rgb = document.getElementById("rgb");
+let moveObj;
+
 
 window.onload = function(){ 
     drawCanvas();
@@ -39,6 +41,8 @@ function cvsMouseDown(e){
 function cvsMouseMove(e){
     if(mouseDown){
         ctx.beginPath();
+        let currentX = e.offsetX;
+        let currentY = e.offsetY;
         
         if(currentTool == "brush") {
             ctx.fillStyle = color;
@@ -49,17 +53,41 @@ function cvsMouseMove(e){
             ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
             ctx.fill();
         }else if(currentTool == "circle"){
-            
+            ctx.fillStyle = color;
+            objectWidth = currentX - startX;
+            objectHeight = currentY - startY;
+            let radius = Math.sqrt(Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2));
+            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            ctx.fill();
         }else if(currentTool == "rectangle"){
-
+            ctx.fillStyle = color;
+            objectWidth = currentX - startX;
+            objectHeight = currentY - startY;
+            ctx.fillRect(startX, startY, objectWidth, objectHeight);
         }
+        // else if(currentTool == "line"){
+        //     ctx.fillStyle = color;
+        //     ctx.lineWidth = widthRange.value;
+        //     ctx.moveTo(startX, startY);
+        //     ctx.lineTo(currentX, currentY);
+        //     ctx.stroke();
+        // }
 
         ctx.closePath();
     }
 }
 
-function cvsMouseUp(){
+function cvsMouseUp(e){
     mouseDown = false;
+    if(currentTool == "line"){
+        ctx.strokeStyle = color;
+        ctx.lineWidth = widthRange.value;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        ctx.closePath();
+    }
     console.log("up")
 }
 
@@ -78,6 +106,10 @@ function eraser(){
 function brush(){
     color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`; 
     currentTool = "brush";
+}
+
+function move(){
+    currentTool = "move";
 }
 
 function text(){
