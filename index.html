@@ -11,6 +11,8 @@
     <div id="container">
         <div id="app-container">
 
+        <canvas id="board" onmousedown="cvsMouseDown()" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
+
             <div id="topbar">
                 <div id="topbar-content">
 
@@ -80,8 +82,45 @@
                 </div>
             </div>
 
-        <canvas id="board" onmousedown="cvsMouseDown()" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
+            <div id="right-sidebar">
+                <div id="side-bar-content">
+                    <p>colour:</p>
+                    <div id="rgb"></div>
+                    <div class="color-range">
+                        <p>red</p>
+                        <input type="range" value="0" min="0" max="255" id="red">
+                    </div>
 
+                    <div class="color-range">
+                        <p>green</p>
+                        <input type="range" value="0" min="0" max="255" id="green">
+                    </div>
+
+                    <div class="color-range">
+                        <p>blue</p>
+                        <input type="range" value="0" min="0" max="255" id="blue">
+                    </div>
+
+                    <div id="adjust-container">
+                        <div class="adjust">
+                            <p>brightness</p>
+                        </div>
+    
+                        <div class="adjust">
+                            <p>saturation</p>
+                        </div>
+    
+                        <div class="adjust">
+                            <p>greyscale</p>
+                        </div>
+    
+                        <div class="adjust">
+                            <p>opacity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 

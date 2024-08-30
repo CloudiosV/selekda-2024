@@ -6,8 +6,15 @@ let mouseDown = false;
 let widthSize = document.getElementById("width-size");
 let widthRange = document.getElementById("width");
 let opacityValue = 100;
-let color = `rgba(0, 0, 0, ${opacityValue})`;
 let currentTool = "brush";
+let red = document.getElementById("red");
+let green = document.getElementById("green");
+let blue = document.getElementById("blue");
+let r = 0;
+let g = 0;
+let b = 0;
+let color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+let rgb = document.getElementById("rgb");
 
 window.onload = function(){ 
     drawCanvas();
@@ -25,12 +32,18 @@ function cvsMouseDown(){
 }
 
 function cvsMouseMove(e){
-    if(mouseDown && currentTool == "brush"){
+    if(mouseDown){
         ctx.beginPath();
-
-        ctx.fillStyle = color;
-        ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI)
-        ctx.fill();
+        
+        if (currentTool === "brush") {
+            ctx.fillStyle = color;
+            ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
+            ctx.fill();
+        } else if (currentTool === "eraser") {
+            ctx.fillStyle = `rgba(255, 255, 255)`;
+            ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
+            ctx.fill();
+        }
 
         ctx.closePath();
     }
@@ -50,11 +63,11 @@ function opacity(e){
 }
 
 function eraser(){
-    color = `rgba(255, 255, 255, ${opacityValue})`
+    currentTool = "eraser";
 }
 
 function brush(){
-    color = `rgba(0, 0, 0, ${opacityValue})`; 
+    color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`; 
     currentTool = "brush";
 }
 
@@ -62,7 +75,20 @@ function text(){
     currentTool = "text";
 }
 
+function changingColor(){
+    r = red.value;
+    g = green.value;
+    b = blue.value;
+    color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+}
+
+function displayColor(){
+    rgb.style.backgroundColor = `rgba(${r}, ${g}, ${b})`
+}
+
 function startDrawing(){
     rangeValue();
+    changingColor();
+    displayColor();
     requestAnimationFrame(startDrawing);
 }
