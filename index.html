@@ -8,14 +8,18 @@
 </head>
 <body>
 
-    <canvas id="board"></canvas>
-
     <div id="container">
         <div id="app-container">
 
             <div id="topbar">
-                <div>
-                    <p>shape</p>
+                <div id="topbar-content">
+                    <p>shape:</p>
+                    <div class="shape">
+                        <p>circle</p>
+                    </div>
+                    <div class="shape">
+                        <p style="font-size: 9px;">rectangle</p>
+                    </div>
                 </div>
             </div>
 
@@ -55,6 +59,8 @@
                     </div>
                 </div>
             </div>
+
+        <canvas id="board" onmousedown="cvsMouseDown()" onmouseup="cvsMouseUp()" onmousemove="cvsMouseMove(event)"></canvas>       
 
         </div>
     </div>
