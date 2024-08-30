@@ -1,0 +1,22 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* header */
+.top {
+    display: flex; 
+}
+
+.left {
+    background-color: #3867FF;
+    padding: 20px 30px;
+    width: fit-content;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    background-color: #467BFF;
+    width: 100%;
+}
