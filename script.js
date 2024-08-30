@@ -23,6 +23,7 @@ let moveObj;
 let brushModel = "circle";
 let scale = 1;
 let scaleSize = 0.1;
+let impor = document.getElementById("import");
 
 window.onload = function(){ 
     drawCanvas();
@@ -201,6 +202,21 @@ function drawBucket(){
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, board.width, board.height);
 }
+
+impor.addEventListener('change', (e) => {
+    let file = e.target.files[0];
+    let fr = new FileReader();
+    fr.onload = function(){
+        let img = new Image();
+        img.onload = function(){
+            ctx.drawImage(img, 50, 50, 200, 200);
+        }
+        img.src = fr.result;
+    }
+    fr.readAsDataURL(file);
+    
+    
+});
 
 function startDrawing(){
     rangeValue();
