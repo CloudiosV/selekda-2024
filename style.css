@@ -1,0 +1,53 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-family: sans-serif;
+}
+
+#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#app-container {
+    width: 1280px;
+    height: 600px;
+    background-color: rgb(0, 75, 121);
+    border-radius: 6px;
+}
+
+#sidebar {
+    background-color: rgb(0, 55, 89);
+    width: 120px;
+    height: 93%;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tools {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#tools .selection {
+    background-color: rgb(23, 84, 123);
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.selection p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

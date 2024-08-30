@@ -3,20 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        #board {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
+    <title>Web Apps</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <canvas id="board"></canvas>
-    
-    <script src="script.js"></script>    
+
+    <div id="container">
+        <div id="app-container">
+
+            <div id="topbar">
+                <div>
+                    <p>shape</p>
+                </div>
+            </div>
+
+            <div id="sidebar">
+                <img src="assets/logo dsgn.png" style="width: 30px; height: 60px; margin-bottom: 30px;">
+                <div id="tools">
+                    <div class="selection">
+                        <p>brush</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>bucket</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>eraser</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>text</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>move</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>stamp</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>picker</p>
+                    </div>
+
+                    <div class="selection">
+                        <p>shape</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
