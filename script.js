@@ -24,6 +24,7 @@ let brushModel = "circle";
 let scale = 1;
 let scaleSize = 0.1;
 let impor = document.getElementById("import");
+let canvasLayer = [];
 
 window.onload = function(){ 
     drawCanvas();
@@ -214,9 +215,15 @@ impor.addEventListener('change', (e) => {
         img.src = fr.result;
     }
     fr.readAsDataURL(file);
-    
-    
 });
+
+function download(){
+    let image = board.toDataURL();
+    let link = document.createElement('a');
+    link.download = 'canvas_image.png';
+    link.href = image;
+    link.click();
+}
 
 function startDrawing(){
     rangeValue();

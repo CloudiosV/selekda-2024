@@ -12,6 +12,13 @@
     transform: translate(-50%, -50%);
 }
 
+#backgroundCanvas {
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+}
+
 #container {
     position: absolute;
     top: 50%;
