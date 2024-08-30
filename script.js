@@ -7,6 +7,7 @@ let widthSize = document.getElementById("width-size");
 let widthRange = document.getElementById("width");
 let opacityValue = 100;
 let color = `rgba(0, 0, 0, ${opacityValue})`;
+let currentTool = "brush";
 
 window.onload = function(){ 
     drawCanvas();
@@ -24,7 +25,7 @@ function cvsMouseDown(){
 }
 
 function cvsMouseMove(e){
-    if(mouseDown){
+    if(mouseDown && currentTool == "brush"){
         ctx.beginPath();
 
         ctx.fillStyle = color;
@@ -54,10 +55,11 @@ function eraser(){
 
 function brush(){
     color = `rgba(0, 0, 0, ${opacityValue})`; 
+    currentTool = "brush";
 }
 
 function text(){
-    
+    currentTool = "text";
 }
 
 function startDrawing(){
