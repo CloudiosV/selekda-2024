@@ -50,8 +50,9 @@
 /* categories */
 .categories {
     display: flex;
-    margin-top: 50px;
-    color: #7B7B7B;
+    margin-top: 60px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .categories h1 {
@@ -59,17 +60,163 @@
 }
 
 .categories select {
-    padding: 10px 20px;
+    padding: 8px 20px;
     font-size: 18px;
     border: 2px solid #7B7B7B;
     background-color: white;
     border-radius: 10px;
+    color: #7B7B7B;
 }
 
 .categories button {
     font-size: 18px;
-    padding: 10px 20px;
+    padding: 8px 30px;
     border-radius: 100px;
     background-color: white;
     border: 2px solid #7B7B7B;
+    color: #7B7B7B;
+}
+
+/* trending section */
+.trending-section {
+    margin-bottom: 150px;
+}
+
+.trending-section img {
+    width: 100%;
+    height: 600px;
+    border-radius: 6px;
+}
+
+.trending-section h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.trending-section p {
+    font-size: 20px;
+    color: #969696;
+}
+
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-container button {
+    padding: 6px 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: white;
+    border: 2px solid #969696;
+    color: #969696;
+}
+
+.status-blog {
+    display: flex;
+    align-items: center;
+}
+
+.status-blog p {
+    font-size: 22px;
+    color: black;
+}
+
+.status-container img {
+    width: 33px;
+    height: 33px;
+}
+
+/* blog */
+.blog-section {
+    margin-top: 120px;
+    margin-bottom: 150px;
+}
+
+.blog-content p {
+    color: #969696;
+}
+
+.blog {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blog button {
+    padding: 6px 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: white;
+    border: 2px solid #969696;
+    color: #969696;
+}
+
+.blog img {
+    width: 500px;
+    height: 250px;
+    border-radius: 6px;
+}
+
+.blog .left-blog {
+    width: 500px;
+}
+
+.left-blog h1 {
+    margin-top: 10px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.left-blog p {
+    font-size: 20px;
+    text-align: justify;
+}
+
+.status-left {
+    display: flex;
+    margin-top: 12px;
+}
+
+.status-left img {
+    width: 33px;
+    height: 33px;
+    margin-right: 10px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.like {
+    display: flex;
+    align-items: center;
+}
+
+.blog .right-blog {
+    width: 500px;
+}
+
+.right-blog h1 {
+    margin-top: 10px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.right-blog p {
+    font-size: 20px;
+    text-align: justify;
+}
+
+.status-right {
+    display: flex;
+    margin-top: 36px;
+}
+
+.status-right img {
+    width: 33px;
+    height: 33px;
+    margin-right: 10px;
 }
