@@ -20,7 +20,9 @@ let objectHeight = 0;
 let color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
 let rgb = document.getElementById("rgb");
 let moveObj;
-
+let brushModel = "circle";
+let scale = 1;
+let scaleSize = 0.1;
 
 window.onload = function(){ 
     drawCanvas();
@@ -34,8 +36,8 @@ function drawCanvas(){
 
 function cvsMouseDown(e){
     mouseDown = true;
-    startX = e.offsetX;
-    startY = e.offsetY;
+    startX = e.offsetX / scale;
+    startY = e.offsetY / scale;
 }
 
 function cvsMouseMove(e){
@@ -46,12 +48,20 @@ function cvsMouseMove(e){
         
         if(currentTool == "brush") {
             ctx.fillStyle = color;
-            ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
-            ctx.fill();
+            if(brushModel == "circle"){
+                ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
+                ctx.fill();
+            }else if(brushModel == "rectangle"){
+                ctx.fillRect(e.offsetX - widthRange.value / 2, e.offsetY - widthRange.value / 2, widthRange.value, widthRange.value);
+            }
         }else if(currentTool == "eraser") {
             ctx.fillStyle = `rgba(255, 255, 255)`;
-            ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
-            ctx.fill();
+            if(brushModel == "circle"){
+                ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
+                ctx.fill();
+            }else if(brushModel == "rectangle"){
+                ctx.fillRect(e.offsetX - widthRange.value / 2, e.offsetY - widthRange.value / 2, widthRange.value, widthRange.value);
+            }
         }else if(currentTool == "circle"){
             ctx.fillStyle = color;
             objectWidth = currentX - startX;
@@ -108,6 +118,10 @@ function brush(){
     currentTool = "brush";
 }
 
+function brushType(type){
+    brushModel = type;
+}
+
 function move(){
     currentTool = "move";
 }
@@ -135,7 +149,7 @@ function adjust(type){
     }else if(type == "greyscale"){
         
     }else if(type == "opacity"){
-
+        
     }
 }
 
@@ -144,10 +158,29 @@ function shapeType(type){
 }
 
 function zoomIn(){
-    ctx.scale(2,2);
+    scale += scaleSize;
+    zoom();
 }
 
 function zoomOut(){
+    if(scale > scaleSize){
+        scale -= scaleSize;
+        zoom();
+    }
+}
+
+function zoom(){
+    ctx.save();
+    drawCanvas();
+    ctx.scale(scale, scale);
+    ctx.restore();
+}
+
+function undo(){
+
+}
+
+function redo(){
 
 }
 
