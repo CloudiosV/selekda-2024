@@ -6,6 +6,7 @@ let mouseDown = false;
 let widthSize = document.getElementById("width-size");
 let widthRange = document.getElementById("width");
 let opacityValue = 100;
+let color = `rgba(0, 0, 0, ${opacityValue})`;
 
 window.onload = function(){ 
     drawCanvas();
@@ -26,7 +27,7 @@ function cvsMouseMove(e){
     if(mouseDown){
         ctx.beginPath();
 
-        ctx.fillStyle = `rgba(0, 0, 0, ${opacityValue})`;
+        ctx.fillStyle = color;
         ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI)
         ctx.fill();
 
@@ -45,6 +46,18 @@ function rangeValue(){
 
 function opacity(e){
     opacityValue = `${e}%`;
+}
+
+function eraser(){
+    color = `rgba(255, 255, 255, ${opacityValue})`
+}
+
+function brush(){
+    color = `rgba(0, 0, 0, ${opacityValue})`; 
+}
+
+function text(){
+    
 }
 
 function startDrawing(){
