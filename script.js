@@ -25,6 +25,8 @@ let scale = 1;
 let scaleSize = 0.1;
 let impor = document.getElementById("import");
 let canvasLayer = [];
+let currentText = '';
+let textPosition = { x: 0, y: 0 };
 
 window.onload = function(){ 
     drawCanvas();
@@ -77,13 +79,6 @@ function cvsMouseMove(e){
             objectHeight = currentY - startY;
             ctx.fillRect(startX, startY, objectWidth, objectHeight);
         }
-        // else if(currentTool == "line"){
-        //     ctx.fillStyle = color;
-        //     ctx.lineWidth = widthRange.value;
-        //     ctx.moveTo(startX, startY);
-        //     ctx.lineTo(currentX, currentY);
-        //     ctx.stroke();
-        // }
 
         ctx.closePath();
     }
@@ -101,8 +96,16 @@ function cvsMouseUp(e){
         ctx.closePath();
     }else if(currentTool == "bucket"){
         drawBucket();
+    }else if(currentTool == "text"){
+        board.addEventListener('click', function (e) {
+            let textInput = prompt("Enter your text:");
+            if (textInput) {
+                currentText = textInput;
+                textPosition = { x: e.offsetX, y: e.offsetY };
+                drawText();
+            }
+        });
     }
-    console.log("up")
 }
 
 function rangeValue(){
@@ -130,8 +133,42 @@ function move(){
     currentTool = "move";
 }
 
-function text(){
-    currentTool = "text";
+function textLocation() {
+    board.addEventListener('click', function(e) {
+        if (currentTool === "text") {
+            let textInput = prompt("Enter your text:");
+            if (textInput) {
+                currentText = textInput;
+                textPosition = { x: e.offsetX, y: e.offsetY };
+                drawText();
+            }
+        }
+    });
+}
+
+function drawText(){
+    if (currentText) {
+        ctx.font = "20px Arial";
+        ctx.fillStyle = color;
+        ctx.fillText(currentText, textPosition.x, textPosition.y);
+    }
+}
+
+function pickerLocation() {
+    board.addEventListener('click', function(e) {
+        if (currentTool === "picker") {
+            let imageData = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+            r = imageData[0];
+            g = imageData[1];
+            b = imageData[2];
+            color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+            displayColor(); // Memperbarui tampilan elemen RGB
+        }
+    });
+}
+
+function displayColor(){
+    rgb.style.backgroundColor = color;
 }
 
 function changingColor(){
@@ -197,6 +234,12 @@ function bucket(){
 
 function tool(current){
     currentTool = current;
+
+    if (currentTool === "picker") {
+        pickerTool();
+    } else if (currentTool === "text") {
+        textLocation();
+    }
 }
 
 function drawBucket(){
