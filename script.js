@@ -133,38 +133,34 @@ function move(){
     currentTool = "move";
 }
 
-function textLocation() {
-    board.addEventListener('click', function(e) {
-        if (currentTool === "text") {
-            let textInput = prompt("Enter your text:");
-            if (textInput) {
-                currentText = textInput;
-                textPosition = { x: e.offsetX, y: e.offsetY };
-                drawText();
-            }
+function textLocation(e) {
+    if (currentTool === "text") {
+        let textInput = prompt("Enter your text:");
+        if (textInput) {
+            currentText = textInput;
+            textPosition = { x: e.offsetX, y: e.offsetY };
+            drawText();
         }
-    });
+    }
 }
 
 function drawText(){
-    if (currentText) {
+    if(currentText){
         ctx.font = "20px Arial";
         ctx.fillStyle = color;
         ctx.fillText(currentText, textPosition.x, textPosition.y);
     }
 }
 
-function pickerLocation() {
-    board.addEventListener('click', function(e) {
-        if (currentTool === "picker") {
-            let imageData = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
-            r = imageData[0];
-            g = imageData[1];
-            b = imageData[2];
-            color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
-            displayColor(); // Memperbarui tampilan elemen RGB
-        }
-    });
+function pickerLocation(e) {
+    if(currentTool == "picker"){
+        let imageData = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+        r = imageData[0];
+        g = imageData[1];
+        b = imageData[2];
+        color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+        displayColor();
+    }
 }
 
 function displayColor(){
@@ -234,12 +230,18 @@ function bucket(){
 
 function tool(current){
     currentTool = current;
+    removeCanvasListeners();
 
-    if (currentTool === "picker") {
-        pickerTool();
-    } else if (currentTool === "text") {
-        textLocation();
+    if(currentTool === "picker"){
+        board.addEventListener('click', pickerLocation);
+    }else if(currentTool === "text"){
+        board.addEventListener('click', textLocation);
     }
+}
+
+function removeCanvasListeners(){
+    board.removeEventListener('click', pickerLocation);
+    board.removeEventListener('click', textLocation);
 }
 
 function drawBucket(){
