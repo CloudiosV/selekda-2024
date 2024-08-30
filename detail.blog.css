@@ -115,3 +115,80 @@
 }
 
 /* leave comment section */
+.leave-comment {
+
+}
+
+.leave-comment p {
+    font-size: 22px;
+    color: #595959;
+    margin-bottom: 8px;
+}
+
+.leave-comment input {
+    color: #ABABAB;
+    border: 2px solid #ABABAB;
+    padding: 6px 16px;
+    width: 500px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.send-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.send-container div {
+    margin-bottom: 40px; 
+}
+
+.comment-input textarea {
+    color: #ABABAB;
+    border: 2px solid #ABABAB;
+    padding: 6px 16px;
+    width: 500px;
+    height: 150px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.captcha-container button {
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    font-size: 26px;
+    border-radius: 6px;
+    color: white;
+}
+
+.captcha {
+    color: #ABABAB;
+    border: 2px solid #ABABAB;
+    padding: 10px 16px;
+    width: 500px;
+    border-radius: 6px;
+    font-size: 18px;
+    display: flex;
+    display: flex;
+    align-items: center;
+    /* margin-top: 33px; */
+}
+
+.captcha input {
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+}
+
+.captcha label {
+    color: black;
+    font-size: 22px;
+    margin-left: 18px;
+    margin-right: 220px;
+}
+
+.captcha img {
+    width: 60px;
+    height: 60px;
+}
