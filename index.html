@@ -56,31 +56,31 @@
             <div id="sidebar">
                 <img src="assets/logo dsgn.png" style="width: 30px; height: 60px; margin-bottom: 30px;">
                 <div id="tools">
-                    <div class="selection" onclick="brush()">
+                    <div class="selection" onclick="tool('brush')">
                         <p>brush</p>
                     </div>
 
-                    <div class="selection">
+                    <div class="selection" onclick="tool('bucket')">
                         <p>bucket</p>
                     </div>
 
-                    <div class="selection" onclick="eraser();">
+                    <div class="selection" onclick="tool('eraser');">
                         <p>eraser</p>
                     </div>
 
-                    <div class="selection" onclick="text()">
+                    <div class="selection" onclick="tool('text')">
                         <p>text</p>
                     </div>
 
-                    <div class="selection" onclick="move()">
+                    <div class="selection" onclick="tool('move')">
                         <p>move</p>
                     </div>
 
-                    <div class="selection">
+                    <div class="selection" onclick="tool('stamp')">
                         <p>stamp</p>
                     </div>
 
-                    <div class="selection">
+                    <div class="selection" onclick="tool('picker')">
                         <p>picker</p>
                     </div>
 
@@ -161,6 +161,13 @@
                         <p style="font-size: 10px;">Intensity</p>
                         <input type="range" value="50" min="0" max="100" style="accent-color: white;">
                     </div>
+                </div>
+            </div>
+
+            <div id="bottom-bar">
+                <div id="bottom-content">
+                    <p>size: 800 x 400</p>
+                    <p>zoom: 100%</p>
                 </div>
             </div>
             

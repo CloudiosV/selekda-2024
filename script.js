@@ -97,6 +97,8 @@ function cvsMouseUp(e){
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
         ctx.closePath();
+    }else if(currentTool == "bucket"){
+        drawBucket();
     }
     console.log("up")
 }
@@ -158,8 +160,10 @@ function shapeType(type){
 }
 
 function zoomIn(){
-    scale += scaleSize;
-    zoom();
+    if(scale < 1.1){
+        scale += scaleSize;
+        zoom();
+    }
 }
 
 function zoomOut(){
@@ -171,8 +175,9 @@ function zoomOut(){
 
 function zoom(){
     ctx.save();
-    drawCanvas();
+    ctx.clearRect(0, 0, board.width, board.height);
     ctx.scale(scale, scale);
+    drawCanvas();
     ctx.restore();
 }
 
@@ -182,6 +187,19 @@ function undo(){
 
 function redo(){
 
+}
+
+function bucket(){
+    currentTool = "bucket";
+}
+
+function tool(current){
+    currentTool = current;
+}
+
+function drawBucket(){
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, board.width, board.height);
 }
 
 function startDrawing(){

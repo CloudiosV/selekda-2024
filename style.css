@@ -207,3 +207,23 @@
     height: 100%;
     font-size: 9px;
 }
+
+#bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 140px;
+    height: 40px;
+    width: 930px;
+    background-color: rgb(189, 189, 189);
+}
+
+#bottom-bar #bottom-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#bottom-bar #bottom-content p{
+    color: black;
+    margin-left: 30px;
+}
