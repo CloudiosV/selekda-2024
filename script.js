@@ -1,278 +1,349 @@
 let board = document.getElementById("board");
 let ctx = board.getContext("2d");
-board.width = 800;
-board.height = 400;
-let mouseDown = false;
-let widthSize = document.getElementById("width-size");
-let widthRange = document.getElementById("width");
-let opacityValue = 1;
-let currentTool = "brush";
-let red = document.getElementById("red");
-let green = document.getElementById("green");
-let blue = document.getElementById("blue");
-let r = 0;
-let g = 0;
-let b = 0;
-let startX = 0;
-let startY = 0;
-let objectWidth = 0;
-let objectHeight = 0;
-let color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
-let rgb = document.getElementById("rgb");
-let moveObj;
-let brushModel = "circle";
-let scale = 1;
-let scaleSize = 0.1;
-let impor = document.getElementById("import");
-let canvasLayer = [];
-let currentText = '';
-let textPosition = { x: 0, y: 0 };
+board.width = 1000;
+board.height = 600;
+let velocityX = 0;
+let velocityY = 0;
+let velocityBallX = 0;
+let velocityBallY = 5;
+let playerX = 200;
+let playerY = board.height - 150;
+let ballX = board.width / 2 - 50;
+let ballY = 0;
+let gravity = 2;
+let isOnGround = false; 
+let goalX = 0;
+let goalY = board.height - 200;
+let enemyGoalX = board.width - 30;
+let enemyGoalY = board.height - 200;
+let playerHit = false;
+let ballW = 40;
+let ballH = 40;
+let froze = false;
+let enemyX = 700;
+let enemyY = board.height - 100;
+let ballSpeedInterval;
+let slowBallX = 0;
 
-window.onload = function(){ 
-    drawCanvas();
-    startDrawing();
+let imgGoal1 = new Image();
+imgGoal1.src = 'assets/Goal - Side.png';
+
+let imgGoal2 = new Image();
+imgGoal2.src = 'assets/Goal - Side 2.png';
+
+let imgBall = new Image();
+imgBall.src = 'assets/Ball 01.png';
+
+let imgBackGround = new Image();
+imgBackGround.src = 'assets/background2.jpg';
+
+let imgDecrease = new Image();
+imgDecrease.src = 'assets/'
+
+//powerup
+let increase = [];
+let decrease = [];
+let freeze = [];
+
+window.onload = function(){
+    game();
+    setInterval(spawnRandom, 5000);
 }
 
-function drawCanvas(){
+function drawGame(){
+    ctx.fillStyle = "#efefef";
+    ctx.fillRect(0, 0, board.width, board.height);
+
     ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, board.width, board.height);
+    ctx.fillRect(goalX, goalY, 30, 200); 
+    ctx.fillRect(enemyGoalX, enemyGoalY, 30, 200); 
 }
 
-function cvsMouseDown(e){
-    mouseDown = true;
-    startX = e.offsetX / scale;
-    startY = e.offsetY / scale;
+function drawPlayer(){
+    ctx.fillStyle = "blue";
+    ctx.fillRect(playerX, playerY, 50, 100);
 }
 
-function cvsMouseMove(e){
-    if(mouseDown){
-        ctx.beginPath();
-        let currentX = e.offsetX;
-        let currentY = e.offsetY;
-        
-        if(currentTool == "brush") {
-            ctx.fillStyle = color;
-            if(brushModel == "circle"){
-                ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
-                ctx.fill();
-            }else if(brushModel == "rectangle"){
-                ctx.fillRect(e.offsetX - widthRange.value / 2, e.offsetY - widthRange.value / 2, widthRange.value, widthRange.value);
-            }
-        }else if(currentTool == "eraser") {
-            ctx.fillStyle = `rgba(255, 255, 255)`;
-            if(brushModel == "circle"){
-                ctx.arc(e.offsetX, e.offsetY, widthRange.value, 0, 2 * Math.PI);
-                ctx.fill();
-            }else if(brushModel == "rectangle"){
-                ctx.fillRect(e.offsetX - widthRange.value / 2, e.offsetY - widthRange.value / 2, widthRange.value, widthRange.value);
-            }
-        }else if(currentTool == "circle"){
-            ctx.fillStyle = color;
-            objectWidth = currentX - startX;
-            objectHeight = currentY - startY;
-            let radius = Math.sqrt(Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2));
-            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
-            ctx.fill();
-        }else if(currentTool == "rectangle"){
-            ctx.fillStyle = color;
-            objectWidth = currentX - startX;
-            objectHeight = currentY - startY;
-            ctx.fillRect(startX, startY, objectWidth, objectHeight);
-        }
+function updatePlayer(){
+    if(!isOnGround){
+        velocityY += gravity;
+    }
 
-        ctx.closePath();
+    playerX += velocityX;
+    playerY += velocityY;
+
+    if(playerY + 100 > board.height){ 
+        playerY = board.height - 100;
+        isOnGround = true;
+    }else{
+        isOnGround = false;
+    }
+
+    drawPlayer();
+}
+
+function drawEnemy(){
+    ctx.fillStyle = "red";
+    ctx.fillRect(enemyX, enemyY, 50, 100);
+}
+
+function drawBall(){
+    ctx.fillStyle = "black";
+    ctx.fillRect(ballX, ballY, ballW, ballH);
+}
+
+function updateBall(){
+    if(!froze){
+        ballX += velocityBallX + slowBallX;
+        ballY += velocityBallY + slowBallX;    
+    }
+
+    if(!isOnGround){
+        ballH += gravity;
+    }
+
+    if(ballY + 40 > board.height){ 
+        ballY = board.height - 40;
+        isOnGround = true;
+    }else{
+        isOnGround = false;
+    }
+
+    if(ballX < 0){
+        velocityBallX = 2;
+    }else if(ballX + 40 >= board.width){
+        velocityBallX = -2
+    }
+
+    drawBall();
+}
+
+function spawnRandom(){
+    let chance = Math.floor(Math.random() * 10);
+    if(chance < 4){
+        locationIncrease();
+    }else if(chance < 7){
+        locationDecrease();
+    }else if(chance < 10){
+        locationFreeze();
     }
 }
 
-function cvsMouseUp(e){
-    mouseDown = false;
-    if(currentTool == "line"){
-        ctx.strokeStyle = color;
-        ctx.lineWidth = widthRange.value;
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-        ctx.closePath();
-    }else if(currentTool == "bucket"){
-        drawBucket();
-    }else if(currentTool == "text"){
-        board.addEventListener('click', function (e) {
-            let textInput = prompt("Enter your text:");
-            if (textInput) {
-                currentText = textInput;
-                textPosition = { x: e.offsetX, y: e.offsetY };
-                drawText();
-            }
-        });
+function locationIncrease(){
+    let x = Math.floor(Math.random() * (800 - 200)) + 200;
+    increase.push({x, y: 0, w: 30, h: 30});
+}
+
+function drawIncrease(){
+    ctx.fillStyle = "red";
+    for(let i = 0; i < increase.length; i++){
+        let e = increase[i];
+        e.y += 5;
+        ctx.fillRect(e.x, e.y, e.w, e.h);
     }
 }
 
-function rangeValue(){
-    widthSize.innerHTML = `${widthRange.value} px`
+function locationDecrease(){
+    let x = Math.floor(Math.random() * (800 - 200)) + 200;
+    decrease.push({x, y: 0, w: 30, h: 30});
 }
 
-function opacity(e){
-    opacityValue = `${e}%`;
-}
-
-function eraser(){
-    currentTool = "eraser";
-}
-
-function brush(){
-    color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`; 
-    currentTool = "brush";
-}
-
-function brushType(type){
-    brushModel = type;
-}
-
-function move(){
-    currentTool = "move";
-}
-
-function textLocation(e) {
-    if (currentTool === "text") {
-        let textInput = prompt("Enter your text:");
-        if (textInput) {
-            currentText = textInput;
-            textPosition = { x: e.offsetX, y: e.offsetY };
-            drawText();
-        }
+function drawDecrease(){
+    ctx.fillStyle = "orange";
+    for(let i = 0; i < decrease.length; i++){
+        let e = decrease[i];
+        e.y += 5;
+        ctx.fillRect(e.x, e.y, e.w, e.h);
     }
 }
 
-function drawText(){
-    if(currentText){
-        ctx.font = "20px Arial";
-        ctx.fillStyle = color;
-        ctx.fillText(currentText, textPosition.x, textPosition.y);
+function locationFreeze(){
+    let x = Math.floor(Math.random() * (800 - 200)) + 200;
+    freeze.push({x, y: 0, w: 30, h: 30});
+}
+
+function drawFreeze(){
+    ctx.fillStyle = "aqua";
+    for(let i = 0; i < freeze.length; i++){
+        let e = freeze[i];
+        e.y += 5;
+        ctx.fillRect(e.x, e.y, e.w, e.h);
     }
 }
 
-function pickerLocation(e) {
-    if(currentTool == "picker"){
-        let imageData = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
-        r = imageData[0];
-        g = imageData[1];
-        b = imageData[2];
-        color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
-        displayColor();
-    }
+function game() {
+    drawGame();
+    drawEnemy();
+    drawBall();
+    updatePlayer();
+    updateBall();
+    isCollisions();
+    drawIncrease();
+    drawFreeze();
+    drawDecrease();
+    requestAnimationFrame(game);
 }
 
-function displayColor(){
-    rgb.style.backgroundColor = color;
-}
-
-function changingColor(){
-    r = red.value;
-    g = green.value;
-    b = blue.value;
-    color = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
-}
-
-function displayColor(){
-    rgb.style.backgroundColor = `rgba(${r}, ${g}, ${b})`
-}
-
-function adjust(type){
-    if(type == "brightness"){
-
-    }else if(type == "saturation"){
-        
-    }else if(type == "greyscale"){
-        
-    }else if(type == "opacity"){
-        
-    }
-}
-
-function shapeType(type){
-    currentTool = type;
-}
-
-function zoomIn(){
-    if(scale < 1.1){
-        scale += scaleSize;
-        zoom();
-    }
-}
-
-function zoomOut(){
-    if(scale > scaleSize){
-        scale -= scaleSize;
-        zoom();
-    }
-}
-
-function zoom(){
-    ctx.save();
-    ctx.clearRect(0, 0, board.width, board.height);
-    ctx.scale(scale, scale);
-    drawCanvas();
-    ctx.restore();
-}
-
-function undo(){
-
-}
-
-function redo(){
-
-}
-
-function bucket(){
-    currentTool = "bucket";
-}
-
-function tool(current){
-    currentTool = current;
-    removeCanvasListeners();
-
-    if(currentTool === "picker"){
-        board.addEventListener('click', pickerLocation);
-    }else if(currentTool === "text"){
-        board.addEventListener('click', textLocation);
-    }
-}
-
-function removeCanvasListeners(){
-    board.removeEventListener('click', pickerLocation);
-    board.removeEventListener('click', textLocation);
-}
-
-function drawBucket(){
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, board.width, board.height);
-}
-
-impor.addEventListener('change', (e) => {
-    let file = e.target.files[0];
-    let fr = new FileReader();
-    fr.onload = function(){
-        let img = new Image();
-        img.onload = function(){
-            ctx.drawImage(img, 50, 50, 200, 200);
-        }
-        img.src = fr.result;
-    }
-    fr.readAsDataURL(file);
+document.addEventListener("keydown", (e) => {
+    changeDirection(e, true);
 });
 
-function download(){
-    let image = board.toDataURL();
-    let link = document.createElement('a');
-    link.download = 'canvas_image.png';
-    link.href = image;
-    link.click();
+document.addEventListener("keyup", (e) => {
+    changeDirection(e, false);
+});
+
+function changeDirection(e, move) {
+    if(move){
+        if (e.code == "KeyA"){
+            velocityX = -5;
+        }else if(e.code == "KeyD"){
+            velocityX = 5;
+        }else if(e.code == "KeyW"){
+            if(isOnGround){
+                velocityY = -30;
+                isOnGround = false;
+            }
+        }else if(e.code == "Space"){
+            playerHit = true;
+        }
+    }else{
+        if(e.code == "KeyA" || e.code == "KeyD"){
+            velocityX = 0;
+        }if(e.code == "Space"){
+            playerHit = false;
+        }
+    }
 }
 
-function startDrawing(){
-    rangeValue();
-    changingColor();
-    displayColor();
-    requestAnimationFrame(startDrawing);
+function isCollide(obj1, obj2){
+    return obj1.x < obj2.x + obj2.w &&
+        obj1.x + obj1.w > obj2.x &&
+        obj1.y < obj2.y + obj2.h &&
+        obj1.y + obj1.h > obj2.y;
+}
+
+function isCollisions(){
+    if(isCollide({x: goalX, y: goalY, w: 30, h: 200}, {x: ballX, y: ballY, w: ballW, h: ballH})){
+        alert("you lose");
+        ballX = board.width / 2;
+        ballY = 0;
+        velocityBallY = 3;
+        winner();
+    }
+
+    if(isCollide({x: enemyGoalX, y: enemyGoalY, w: 30, h: 200}, {x: ballX, y: ballY, w: ballW, h: ballH})){
+        alert("you scored");
+        ballX = board.width / 2;
+        ballY = 0;
+        velocityBallY = 3;
+        winner();
+    }
+
+    if(isCollide({x: playerX, y: playerY, w: 30, h: 100}, {x: ballX, y: ballY, w: ballW, h: ballH}) && playerHit){
+        velocityBallX = 3;
+        velocityBallY = -10;
+
+        setTimeout(() => {
+            velocityBallY = gravity;
+        }, 500);
+
+        ballSpeedInterval = setInterval(() => {
+            slowBallX -= 0.1;
+        }, 500);
+
+        setTimeout(() => {
+            clearInterval(ballSpeedInterval);
+            slowBallX = 0;
+        }, 1500);
+    }
+
+    if(isCollide({x: playerX, y: playerY, w: 30, h: 100}, {x: ballX, y: ballY, w: ballW, h: ballH})){
+        velocityBallX = 2;
+        setTimeout(() => {
+            velocityBallY = gravity;
+        }, 500);
+        
+        ballSpeedInterval = setInterval(() => {
+            slowBallX -= 0.1;
+        }, 500);
+
+        setTimeout(() => {
+            clearInterval(ballSpeedInterval);
+            slowBallX = 0;
+        }, 1500);
+    }
+
+    if(isCollide({x: enemyX, y: enemyY, w: 30, h: 100}, {x: ballX, y: ballY, w: ballW, h: ballH})){
+        velocityBallX = -2;
+        setTimeout(() => {
+            velocityBallY = gravity;
+        }, 500);
+
+        ballSpeedInterval = setInterval(() => {
+            slowBallX += 0.1;
+        }, 500);
+
+        setTimeout(() => {
+            clearInterval(ballSpeedInterval);
+            slowBallX = 0;
+        }, 1500);
+    }
+
+    // increase
+    for(let i = 0; i < increase.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, increase[i])){
+            ballW += 10;
+            ballH += 10;
+            increase.splice(i, 1);
+        }
+    }
+
+    // decrease
+    for(let i = 0; i < decrease.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, decrease[i])){
+            ballW -= 10;
+            ballH -= 10;
+            decrease.splice(i, 1);
+        }
+    }
+
+    // freeze
+    for(let i = 0; i < freeze.length; i++){
+        if(isCollide({x: playerX, y: playerY, w: 50, h: 100}, freeze[i])){
+            froze = true;
+            freeze.splice(i, 1);
+            setTimeout(() => {
+                froze = false;
+            }, 3500);
+        }
+    }
+}
+
+function winner(){
+    velocityX = 0;
+    velocityY = 0;
+    velocityBallX = 0;
+    velocityBallY = 5;
+    playerX = 200;
+    playerY = board.height - 150;
+    ballX = board.width / 2 - 50;
+    ballY = 0;
+    gravity = 2;
+    isOnGround = false; 
+    goalX = 0;
+    goalY = board.height - 200;
+    enemyGoalX = board.width - 30;
+    enemyGoalY = board.height - 200;
+    playerHit = false;
+    ballW = 40;
+    ballH = 40;
+    froze = false;
+    enemyX = 700;
+    enemyY = board.height - 100;
+    ballSpeedInterval;
+    slowBallX = 0;
+    increase = [];
+    decrease = [];
+    freeze = [];
+    drawGame();
 }

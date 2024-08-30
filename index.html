@@ -3,178 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Apps</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        #board {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
 
-    <div id="container">
-        <div id="app-container">
-
-        <canvas id="board" onmousedown="cvsMouseDown(event)" onmouseup="cvsMouseUp(event)" onmousemove="cvsMouseMove(event)"></canvas>       
-
-            <div id="topbar">
-                <div id="topbar-content">
-
-                    <p style="margin-left: 40px; margin-right: 10px;">shape:</p>
-
-                    <div class="shape" onclick="shapeType('circle')">
-                        <p>circle</p>
-                    </div>
-                    <div class="shape" style="margin-right: 50px;" onclick="shapeType('rectangle')">
-                        <p style="font-size: 9px;">rectangle</p>
-                    </div>
-
-                    <label for="width">size:</label>
-                    <input type="range" value="5" min="0" max="100" id="width" style="margin-right: 16px; accent-color: white;">
-                    <div style="background-color: rgb(23, 84, 123); padding: 6px 10px; font-size: 14px; border-radius: 4px; margin-right: 30px;">
-                        <p id="width-size">5px</p>
-                    </div>  
-
-                    <p>opacity:</p>
-                    <div class="opacity" onclick="opacity(100);">
-                        <p>100</p>
-                    </div>
-                    <div class="opacity" onclick="opacity(50)">
-                        <p>50</p>
-                    </div>
-                    <div class="opacity" onclick="opacity(0)" style="margin-right: 30px;">
-                        <p>0</p>
-                    </div>
-
-                    <p>brush type:</p>
-                    <div class="brush-type" onclick="brushType('circle')">
-                        <p>circle</p>
-                    </div>
-                    <div class="brush-type" onclick="brushType('rectangle')">
-                        <p>rectangle</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div id="sidebar">
-                <img src="assets/logo dsgn.png" style="width: 30px; height: 60px; margin-bottom: 30px;">
-                <div id="tools">
-                    <div class="selection" onclick="tool('brush')">
-                        <p>brush</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('bucket')">
-                        <p>bucket</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('eraser');">
-                        <p>eraser</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('text')">
-                        <p>text</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('move')">
-                        <p>move</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('stamp')">
-                        <p>stamp</p>
-                    </div>
-
-                    <div class="selection" onclick="tool('picker')">
-                        <p>picker</p>
-                    </div>
-
-                    <div class="selection" onclick="shapeType('line')">
-                        <p>line</p>
-                    </div>
-                </div>
-
-                <div id="file-work">
-                    <div class="selected">
-                        <p>paste</p>
-                    </div>
-                    
-                    <div class="selected" onclick="undo()">
-                        <p>undo</p>
-                    </div>
-
-                    <div class="selected" onclick="redo()">
-                        <p>redo</p>
-                    </div>
-
-                    <div class="selected" onclick="zoomOut()">
-                        <p style="text-align: center;">-<br>zoom</p>
-                    </div>
-
-                    <div class="selected" onclick="zoomIn()">
-                        <p style="text-align: center;">+<br>zoom</p>
-                    </div>
-
-                    <div class="selected">
-                        <label for="import" style="font-size: 10px;">import</label>
-                        <input type="file" accept="image/png, image/jpeg" id="import" style="display: none;">
-                    </div>
-
-                    <div class="selected" onclick="download()">
-                        <p>export</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="right-sidebar">
-                <div id="side-bar-content">
-                    <p>colour:</p>
-                    <div id="rgb"></div>
-                    <div class="color-range">
-                        <p>red</p>
-                        <input type="range" value="0" min="0" max="255" id="red" style="accent-color: red;">
-                    </div>
-
-                    <div class="color-range">
-                        <p>green</p>
-                        <input type="range" value="0" min="0" max="255" id="green" style="accent-color: green;">
-                    </div>
-
-                    <div class="color-range">
-                        <p>blue</p>
-                        <input type="range" value="0" min="0" max="255" id="blue" style="accent-color: blue;">
-                    </div>
-
-                    <div id="adjust-container">
-                        <div class="adjust" onclick="adjust('brightness')">
-                            <p>brightness</p>
-                        </div>
+    <canvas id="board"></canvas>
     
-                        <div class="adjust" onclick="adjust('saturation')">
-                            <p>saturation</p>
-                        </div>
-    
-                        <div class="adjust" onclick="adjust('greyscale')">
-                            <p>greyscale</p>
-                        </div>
-    
-                        <div class="adjust" onclick="adjust('opacity')">
-                            <p>opacity</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: center;">
-                        <p style="font-size: 10px;">Intensity</p>
-                        <input type="range" value="50" min="0" max="100" style="accent-color: white;">
-                    </div>
-                </div>
-            </div>
-
-            <div id="bottom-bar">
-                <div id="bottom-content">
-                    <p>size: 800 x 400</p>
-                    <p>zoom: 100%</p>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="script.js"></script>    
 </body>
 </html>
